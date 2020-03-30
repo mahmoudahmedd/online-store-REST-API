@@ -2,10 +2,10 @@
 
 class View
 {
-	public function renderObject($_key, $value)
+	public function renderObject($_key, $_value)
 	{
 		// putting data to JSONObject 
-        $data = array("status" => "ok", $_key => $value);
+        $data = array("status" => "ok", $_key => $_value);
         return json_encode($data, JSON_PRETTY_PRINT);
 	}
 
@@ -30,6 +30,3 @@ class View
         return json_encode($data, JSON_PRETTY_PRINT);
     }
 }
-
-// $aa = new View();
-// echo $aa->renderKey("a","aad");

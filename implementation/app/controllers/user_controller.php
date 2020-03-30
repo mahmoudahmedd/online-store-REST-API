@@ -31,7 +31,7 @@ class UserController extends Controller
         }
 
         $this->model->email = $this->parameters["email"];
-        $this->model->password = $this->parameters["password"];
+        $this->model->password = hash('sha256', $this->parameters["password"]);
 
         $asoArr = array( 
 				    	"email"    => $this->model->email,  
@@ -218,4 +218,5 @@ class UserController extends Controller
         $asoArr = array("username" => $_username);
         return $this->dataAccess->select($asoArr);
     }
+
 }

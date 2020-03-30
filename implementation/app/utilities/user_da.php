@@ -8,11 +8,6 @@ class UserDA extends DataAccessObject
 		$this->tableName = "users";
 	}
 
-	public function getTableName()
-	{
-		return $this->tableName;
-	}
-
 	public function select($_array)
 	{
 		$i = 0;
@@ -85,40 +80,3 @@ class UserDA extends DataAccessObject
 	}
 
 }
-
-// $user = new UserModel();
-
-// $user->username = "test";
-// $user->phoneNumber = "test";
-// $user->email = "test";
-// $user->password = "test";
-// $user->userType = "test";
-// $user->ownerName = "test";
-// $user->logo = "test";
-// $user->accessToken = "test";
-
-
-
-// $aa = new UserDA(DatabaseConnector::getInstance()->getConnection());
-
-
-// $aso_arr = array( 
-//     "username"=>"test",  
-//     "user_iad"=>10, 
-//     "phone_number"=>"test"
-// ); 
-  
-
-
-
-// if($aa->select($aso_arr)){
-
-// 	echo "string";	
-// }
-
-// if($instance)
-// 	echo "string";
-
-
-
-?>
