@@ -218,5 +218,4 @@ class UserController extends Controller
         $asoArr = array("username" => $_username);
         return $this->dataAccess->select($asoArr);
     }
-
 }
