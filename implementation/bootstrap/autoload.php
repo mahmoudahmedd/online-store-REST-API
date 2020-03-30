@@ -5,6 +5,7 @@ $configs = $actions = array();
 $configs = require_once(ROOT . DS . "config" . DS . "app.php");
 
 // Models dir
+require_once(ROOT . DS . "app" . DS . "models" . DS . "model.php");
 require_once(ROOT . DS . "app" . DS . "models" . DS . "user_model.php");
 
 // Views dir
