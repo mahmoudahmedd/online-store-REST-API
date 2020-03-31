@@ -193,8 +193,8 @@ class UserController extends Controller
         foreach ($data as $user) 
         {
             unset($user["password"]); 
+            unset($user["access_token"]); 
             $users[] = $user;
-
         }
 
         echo $this->view->renderArray($users);
