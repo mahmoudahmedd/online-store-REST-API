@@ -90,8 +90,7 @@ class UserController extends Controller
             exit();
         }
 
-        if(!array_key_exists("user_type", $this->parameters) || 
-            ($this->parameters["user_type"] != "buyer" AND $this->parameters["user_type"] != "store_owner") )
+        if(!array_key_exists("user_type", $this->parameters) || !UserType::isValidValue($this->parameters["user_type"]))
         {
             echo $this->view->exception();
             exit();
