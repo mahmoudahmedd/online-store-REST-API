@@ -8,6 +8,12 @@ class UserController extends Controller
 		$this->model = new UserModel();
 		$this->view = new UserView();
 		$this->dataAccess = new UserDA(DatabaseConnector::getInstance()->getConnection());
+
+        // Fill the array with the names of the methods
+        $this->controllersMethodsArr = array();
+        $this->controllersMethodsArr[] = "login";
+        $this->controllersMethodsArr[] = "register";
+        $this->controllersMethodsArr[] = "getAllUsers";
 	}
 
     public function login()
@@ -33,19 +39,14 @@ class UserController extends Controller
         $this->model->email = $this->parameters["email"];
         $this->model->password = hash('sha256', $this->parameters["password"]);
 
-        $asoArr = array( 
-				    	"email"    => $this->model->email,  
-					    "password" => $this->model->password
-					); 
+        $asoArr = array("email" => $this->model->email, "password" => $this->model->password); 
 
         $userData = $this->dataAccess->select($asoArr);
 
         if($userData)
         {
         	$this->model->accessToken = $userData["access_token"];
-
         	echo $this->view->renderObject("access_token", $this->model->accessToken);
-			
 		}
 		else
 		{
@@ -219,4 +220,14 @@ class UserController extends Controller
         return $this->dataAccess->select($asoArr);
     }
 
+
+    public function methodExistsCheck($method)
+    {
+        if(!in_array($method, $this->controllersMethodsArr))
+        {
+            return false;
+        }
+
+        return method_exists($this, $method);
+    }
 }
