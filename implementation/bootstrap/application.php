@@ -16,14 +16,18 @@ class Application
      */
     public static function run() 
     {
-
         /*
             $_GET['class']
             $_GET['method']
             $_GET['parameters']
         */
 
-        $a = new Router($_GET); 
-        $a->mapRoute();
+        $router = new Router($_GET); 
+
+        if(!$router->route())
+        {
+            echo View::exception();
+            exit();
+        }
     }
 }

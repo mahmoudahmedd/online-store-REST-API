@@ -4,56 +4,59 @@ class Router
 {
 	private $controller;
 	private $GETRequest;
+    private $controllersClassesArr;
+    private $controllersMethodsArr;
 
 	public function __construct($_GETRequest)
     {
         $this->GETRequest = $_GETRequest;
+
+        // Fill the array with the names of the classes
+        $this->controllersClassesArr = array();
+        $this->controllersClassesArr[] = "UserController";
+
+        // Fill the array with the names of the methods
+        $this->controllersMethodsArr = array();
+        $this->controllersMethodsArr[] = "login";
+        $this->controllersMethodsArr[] = "register";
+        $this->controllersMethodsArr[] = "getAllUsers";
     }
 
-    private function checkRoutingClass()
+    public function route()
     {
     	if(!array_key_exists("class", $this->GETRequest))
     	{
         	return false;
     	}
 
-        if($this->GETRequest["class"] == "user")
+        if(!array_key_exists("method", $this->GETRequest))
         {
-            $this->controller = new UserController($this->GETRequest["parameters"]);
+            return false;
+        }
+
+        if(!array_key_exists("parameters", $this->GETRequest))
+        {
+            return false;
+        }
+
+        if(!in_array($this->GETRequest["class"], $this->controllersClassesArr))
+        {
+            return false;
+        }
+
+        if(!in_array($this->GETRequest["method"], $this->controllersMethodsArr))
+        {
+            return false;
+        }
+
+        if(method_exists($this->GETRequest["class"], $this->GETRequest["method"]))
+        {
+            $this->controller = new $this->GETRequest["class"]($this->GETRequest["parameters"]);
+            call_user_func(array($this->controller, $this->GETRequest["method"]));
+            
             return true;
         }
             
         return false;
-    }
-    
-    public function mapRoute()
-    {
-    	$data = array("status" => "exception", "message" => "unsupported get request. Please read the API documentation.");
-        if($this->checkRoutingClass())
-        {
-            if($this->GETRequest["method"] == "register")
-            {
-                $this->controller->register();
-            }
-            else if($this->GETRequest["method"] == "login")
-            {
-                $this->controller->login();
-            }
-            else if($this->GETRequest["method"] == "get_all_users")
-            {
-                $this->controller->getAllUsers();
-            }
-            else
-            {
-                echo json_encode($data, JSON_PRETTY_PRINT);
-        		exit();
-            }
-        }
-        else
-        {
-			
-        	echo json_encode($data, JSON_PRETTY_PRINT);
-        	exit();
-        }
     }
 }
