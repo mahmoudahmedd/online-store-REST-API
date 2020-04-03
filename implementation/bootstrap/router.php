@@ -2,48 +2,67 @@
 class Router
 {
 	private $controller;
-	private $GETRequest;
     private $controllersClassesArr;
 
-	public function __construct($_GETRequest)
-    {
-        $this->GETRequest = $_GETRequest;
+    private $messageBody;
+    private $requestMethod;
 
+	public function __construct()
+    {
         // Fill the array with the names of the classes
         $this->controllersClassesArr = array();
         $this->controllersClassesArr[] = "UserController";
     }
 
-    public function route()
+    public function route($_requestUrl, $_requestMethod, $_messageBody)
     {
-    	if(!array_key_exists("class", $this->GETRequest))
-    	{
-        	return false;
-    	}
+        $this->messageBody = $_messageBody;
+        $this->requestMethod = $_requestMethod;
 
-        if(!array_key_exists("method", $this->GETRequest))
+        if(!in_array($_requestUrl[0], $this->controllersClassesArr))
         {
             return false;
         }
 
-        if(!array_key_exists("parameters", $this->GETRequest))
+        $this->controller = new $_requestUrl[0]($_messageBody);
+
+        switch ($this->requestMethod) 
         {
+            case "GET":
+            if(isset($_requestUrl[1]) && !empty($_requestUrl[1]) && ctype_digit($_requestUrl[1])) 
+            {
+                return false;
+                //echo "true - num";
+                //$this->controller->get($_requestUrl[1]);
+            } 
+            else
+            {
+                //echo "false";
+                $this->controller->getAll();
+            }
+            break;
+            case "POST":
+            if(isset($_requestUrl[1]) && !empty($_requestUrl[1]) && !ctype_digit($_requestUrl[1]))
+            {
+                $this->controller->login();
+            }
+            else
+            {
+                $this->controller->create();
+            }
+            break;
+            case "DELETE":
+            return false;
+            // $this->controller->delete($_messageBody);
+            break;
+            case "PUT":
+            return false;
+            // $this->controller->update($_messageBody);
+            break;
+            default:
             return false;
         }
-
-        if(!in_array($this->GETRequest["class"], $this->controllersClassesArr))
-        {
-            return false;
-        }
-  
-        $this->controller = new $this->GETRequest["class"]($this->GETRequest["parameters"]);
-
-        if($this->controller->methodExistsCheck($this->GETRequest["method"]))
-        {
-            call_user_func(array($this->controller, $this->GETRequest["method"]));
-            return true;
-        }
-            
+    
         return false;
     }
 }

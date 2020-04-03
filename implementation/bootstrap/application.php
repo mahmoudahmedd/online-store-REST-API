@@ -21,10 +21,19 @@ class Application
             $_GET['method']
             $_GET['parameters']
         */
+        
+        $parameters = "";
+        if(isset($_REQUEST["parameters"]))
+            $parameters = $_REQUEST["parameters"];
 
-        $router = new Router($_GET); 
+        $requestUrl = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
 
-        if(!$router->route())
+        //print_r($requestUrl);
+        //print_r($_REQUEST);
+
+        $router = new Router();
+
+        if(!$router->route($requestUrl, $_SERVER['REQUEST_METHOD'], $parameters))
         {
             echo View::exception();
             exit();

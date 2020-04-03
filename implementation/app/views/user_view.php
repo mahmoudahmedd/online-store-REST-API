@@ -4,6 +4,7 @@ class UserView extends View
 {
 	public function renderArray($_users)
 	{
+		http_response_code(200);
 		// putting data to JSONObject 
 		$data["status"] = "ok";
 		$data["data"] = $_users;
