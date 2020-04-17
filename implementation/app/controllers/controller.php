@@ -1,35 +1,34 @@
 <?php
 
-class Controller
+abstract class Controller
 {
-	private $parameters;
+	protected $arguments;
 
-	private $model;
-    private $view;
-    private $dataAccess;
+	protected $model;
+    protected $view;
+    protected $dataAccessObject;
+
+    protected $authorizer;
+    protected $authenticator;
 
     /*
-    public function get($_parameters)
+    abstract protected function get()
     {
     }
     */
 
-    public function getAll()
-    {
-    }
+    abstract protected function getAll();
 
-    public function create()
-    {
-    }
+    abstract protected function create();
 
 	/*
-    public function delete($_parameters)
+    abstract protected function delete()
     {
     }
     */
 
     /*
-    public function update($_parameters)
+    abstract protected function update()
     {
     }
     */

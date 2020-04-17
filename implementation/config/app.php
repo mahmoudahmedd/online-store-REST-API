@@ -38,4 +38,24 @@ return
             "db_name"  => "online_store_database",
         ],
     ],
+
+    "tables" => 
+    [
+        "users" => "users",
+    ],
+
+    "columns" => 
+    [
+        "users" => 
+        [
+            "username",
+            "phone_number",
+            "email",
+            "password",
+            "user_type",
+            "full_name",
+            "avatar_url",
+            "access_token"
+        ]
+    ]
 ];

@@ -2,14 +2,6 @@
 
 class View
 {
-	public function renderObject($_key, $_value)
-	{
-        http_response_code(200);
-		// putting data to JSONObject 
-        $data = array("status" => "ok", $_key => $_value);
-        return json_encode($data, JSON_PRETTY_PRINT);
-	}
-
     public function success()
     {
         http_response_code(200);
@@ -32,7 +24,25 @@ class View
     {
         http_response_code(404);
     	// putting data to JSONObject 
-        $data = array("status" => "exception", "message" => "unsupported get request. Please read the API documentation.");
+        $data = array("status" => "exception", "message" => "unsupported request. Please read the API documentation.");
+        return json_encode($data, JSON_PRETTY_PRINT);
+    }
+
+    public function renderElement($_key, $_value)
+    {
+        http_response_code(200);
+        // putting data to JSONObject 
+        $data = array("status" => "ok", $_key => $_value);
+        return json_encode($data, JSON_PRETTY_PRINT);
+    }
+
+    public function renderElements($_array)
+    {
+        http_response_code(200);
+        // putting data to JSONObject 
+        $data["status"] = "ok";
+        $data["data"] = $_array;
+
         return json_encode($data, JSON_PRETTY_PRINT);
     }
 }

@@ -19,23 +19,31 @@ class Application
         /*
             $_GET['class']
             $_GET['method']
-            $_GET['parameters']
+            $_GET['arguments']
         */
         
-        $parameters = "";
-        if(isset($_REQUEST["parameters"]))
-            $parameters = $_REQUEST["parameters"];
+        // print_r($_SERVER['PATH_INFO']);
+        // print_r($_REQUEST);
+
+        // $test = new Authorizer();
+        // $test->authorize($user, UserType::ADMINISTRATOR);
+
+        $arguments = "";
+        if(isset($_REQUEST["arguments"]))
+            $arguments = $_REQUEST["arguments"];
 
         $requestUrl = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
 
-        //print_r($requestUrl);
-        //print_r($_REQUEST);
-
         $router = new Router();
 
-        if(!$router->route($requestUrl, $_SERVER['REQUEST_METHOD'], $parameters))
+        if(!$router->route($requestUrl, $_SERVER['REQUEST_METHOD'], $arguments))
         {
-            echo View::exception();
+            http_response_code(404);
+
+            // putting data to JSONObject 
+            $data = array("status" => "exception", "message" => "unsupported request. Please read the API documentation.");
+            echo json_encode($data, JSON_PRETTY_PRINT);
+
             exit();
         }
     }
