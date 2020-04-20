@@ -97,7 +97,7 @@ git clone https://github.com/mahmoudahmedd/online-store-REST-API.git C:\xampp\ht
 ## Documentation
 
 <b>Introduction</b>
-<p align="center">
+
 With Online Store REST API you can get access to data in JSON format.
 
 To access the data you just send a HTTP-request to address ```http://localhost/{controllerName}``` with controller-specific parameters. ```http://localhost/{controllerName}/{id}```
@@ -117,7 +117,6 @@ If status is "fail" or "exception", then there is no data.
 If status is "fail" then comment contains the reason why the request failed. 
 <br>
 If status is "exception" then read the API documentation... Because there is a missing argument(s). 
-</p>
 
 
 
